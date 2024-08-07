@@ -1,0 +1,92 @@
+
+<html>
+    <head>
+        <title>NKR Developers</title>
+        <link rel="stylesheet" href="./index.css">
+       
+    </head>
+    <body>
+        <div class="wrapper">
+            <h1>How much Dowry are you worth?</h1>
+            <div class="field">
+                <label for="">Your Monthly salary (Fix)  ₹</label>
+                <div><input type="text" class="salary" placeholder="₹50000PM"></div>
+            </div>
+            <div class="field">
+                <label for="">Your Age</label>
+                <div><input type="text" class="age" placeholder="25 Yr"></div>
+            </div>
+            <div class="field">
+                <label for="">You Net Worth</label>
+                <div><input type="text" class="networth" placeholder="₹10000000"></div>
+            </div>
+            <button onclick="calculateSIP()">CALCULATE</button>
+            <h5>MINIMUM AMOUNT: <p id="minimum"></p></h5>
+            <h5>MAXIMUM AMOUNT: <p id="maximum"></p></h5>
+
+            
+        </div>  
+         
+        <!-- Popups -->
+        <div class="popup" id="agePopup">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR9B5xRspKarJVYoFlB--DTtCpLNYvC2zBIQw3V986KJw&s" alt="Underage Meme">
+        </div>
+        <div class="popup" id="agePopup2">
+            <img src="https://pbs.twimg.com/media/F5IgIEmX0AAYimz.jpg" alt="overage Meme">
+        </div>
+        <div class="popup" id="salaryPopup">
+            <img src="https://memesmaking.blr1.cdn.digitaloceanspaces.com/instagrammemes/instagrammemeimages/amma%20behen%20pe%20aa%20jaunga%20mai%20(2).jpg " alt="No Salary Meme">
+        </div>
+        <div class="popup" id="networthPopup">
+            <img src="https://i.pinimg.com/originals/83/82/6d/83826d73278d1b15ba7788bfc8eb3204.jpg" alt="High Net Worth Meme">
+        </div>
+        <div class="popup" id="minCTCPopup">
+            <img src="https://pbs.twimg.com/media/FCSpyQSVcAM0PCj?format=jpg&name=small" alt="Minimum CTC Meme">
+        </div>   
+
+        <script>
+            var CTC  =  document.querySelector(".salary");
+            var AGE  =  document.querySelector(".age");
+            var NET_WORTH  =  document.querySelector(".networth");       
+             function calculateSIP(){
+                
+                var maxAmount = 0;
+                maxAmount = CTC.value * (40) + NET_WORTH.value/4 + ( 60 - AGE.value ) * (6000);
+                var minimumAmount = CTC.value * (25) + NET_WORTH.value / (6) + ( 60 - AGE.value ) * (3000);
+                console.log(maxAmount, minimumAmount);
+                document.getElementById("minimum").innerHTML ="₹"+  Math.round(minimumAmount > 0 ? minimumAmount: 0);
+                document.getElementById("maximum").innerHTML ="₹"+ Math.round(maxAmount > 0 ? maxAmount: 0);
+
+                if (AGE.value < 21) {
+                    showPopup("agePopup");
+                }
+                else if(AGE.value > 40){
+                    showPopup("agePopup2");
+                } else if (CTC.value == 0) {
+                    showPopup("salaryPopup");
+                } else if (NET_WORTH.value > 10000000) {
+                    showPopup("networthPopup");
+                } else if (CTC.value < 20000) { 
+                    showPopup("minCTCPopup");
+
+            }
+        }
+
+        function showPopup(popupId) {
+            var popup = document.getElementById(popupId);
+            popup.classList.add("active");
+            setTimeout(() => {
+                popup.classList.remove("active");
+            }, 3000);
+        }
+        </script>
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-1K3JTQGDT9"></script>
+        <script>
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+        
+          gtag('config', 'G-1K3JTQGDT9');
+        </script>
+    </body>
+</html>
