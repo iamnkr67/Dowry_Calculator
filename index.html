@@ -1,92 +1,234 @@
-
 <html>
-    <head>
-        <title>NKR Developers</title>
-        <link rel="stylesheet" href="./index.css">
-       
-    </head>
-    <body>
-        <div class="wrapper">
-            <h1>How much Dowry are you worth?</h1>
-            <div class="field">
-                <label for="">Your Monthly salary (Fix)  ₹</label>
-                <div><input type="text" class="salary" placeholder="₹50000PM"></div>
-            </div>
-            <div class="field">
-                <label for="">Your Age</label>
-                <div><input type="text" class="age" placeholder="25 Yr"></div>
-            </div>
-            <div class="field">
-                <label for="">You Net Worth</label>
-                <div><input type="text" class="networth" placeholder="₹10000000"></div>
-            </div>
-            <button onclick="calculateSIP()">CALCULATE</button>
-            <h5>MINIMUM AMOUNT: <p id="minimum"></p></h5>
-            <h5>MAXIMUM AMOUNT: <p id="maximum"></p></h5>
+  <head>
+    <title>Dahez Jodo</title>
+    <link rel="stylesheet" href="./index.css" />
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        background: linear-gradient(47deg, blue, red);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      * {
+        font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS",
+          sans-serif;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        margin-top: 5px;
+        margin-bottom: 5px;
+      }
+      h1,
+      h5 {
+        color: white;
+      }
+      .wrapper {
+        background: rgba($color: white, $alpha: 0.2);
+        padding: 20px;
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        backdrop-filter: blur(10px);
+      }
+      input[type="text"] {
+        padding: 10px;
+        color: #222;
+        width: 100%;
+      }
+      input[type="range"] {
+        width: 100%;
+      }
+      .field {
+        margin-top: 10px;
+        margin-bottom: 10px;
+      }
+      label {
+        color: white;
+      }
 
-            
-        </div>  
-         
-        <!-- Popups -->
-        <div class="popup" id="agePopup">
-            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR9B5xRspKarJVYoFlB--DTtCpLNYvC2zBIQw3V986KJw&s" alt="Underage Meme">
-        </div>
-        <div class="popup" id="agePopup2">
-            <img src="https://pbs.twimg.com/media/F5IgIEmX0AAYimz.jpg" alt="overage Meme">
-        </div>
-        <div class="popup" id="salaryPopup">
-            <img src="https://memesmaking.blr1.cdn.digitaloceanspaces.com/instagrammemes/instagrammemeimages/amma%20behen%20pe%20aa%20jaunga%20mai%20(2).jpg " alt="No Salary Meme">
-        </div>
-        <div class="popup" id="networthPopup">
-            <img src="https://i.pinimg.com/originals/83/82/6d/83826d73278d1b15ba7788bfc8eb3204.jpg" alt="High Net Worth Meme">
-        </div>
-        <div class="popup" id="minCTCPopup">
-            <img src="https://pbs.twimg.com/media/FCSpyQSVcAM0PCj?format=jpg&name=small" alt="Minimum CTC Meme">
-        </div>   
+      button {
+        padding: 10px;
+        font-weight: 600;
+        cursor: pointer;
+        background: transparent;
+        color: white;
+        border-color: white;
+      }
+      #minimum,
+      #maximum {
+        font-size: 18px;
+      }
 
-        <script>
-            var CTC  =  document.querySelector(".salary");
-            var AGE  =  document.querySelector(".age");
-            var NET_WORTH  =  document.querySelector(".networth");       
-             function calculateSIP(){
-                
-                var maxAmount = 0;
-                maxAmount = CTC.value * (40) + NET_WORTH.value/4 + ( 60 - AGE.value ) * (6000);
-                var minimumAmount = CTC.value * (25) + NET_WORTH.value / (6) + ( 60 - AGE.value ) * (3000);
-                console.log(maxAmount, minimumAmount);
-                document.getElementById("minimum").innerHTML ="₹"+  Math.round(minimumAmount > 0 ? minimumAmount: 0);
-                document.getElementById("maximum").innerHTML ="₹"+ Math.round(maxAmount > 0 ? maxAmount: 0);
-
-                if (AGE.value < 21) {
-                    showPopup("agePopup");
-                }
-                else if(AGE.value > 40){
-                    showPopup("agePopup2");
-                } else if (CTC.value == 0) {
-                    showPopup("salaryPopup");
-                } else if (NET_WORTH.value > 10000000) {
-                    showPopup("networthPopup");
-                } else if (CTC.value < 20000) { 
-                    showPopup("minCTCPopup");
-
-            }
+      .popup {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.7);
+        justify-content: center;
+        align-items: center;
+        z-index: 50;
+        animation: fadeIn 0.5s;
+      }
+      .popup img {
+        max-width: 80%;
+        border-radius: 10px;
+        box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+        animation: zoomIn 0.5s;
+      }
+      .popup.active {
+        display: flex;
+      }
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
         }
-
-        function showPopup(popupId) {
-            var popup = document.getElementById(popupId);
-            popup.classList.add("active");
-            setTimeout(() => {
-                popup.classList.remove("active");
-            }, 3000);
+        to {
+          opacity: 1;
         }
-        </script>
-        <script async src="https://www.googletagmanager.com/gtag/js?id=G-1K3JTQGDT9"></script>
-        <script>
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-          gtag('js', new Date());
-        
-          gtag('config', 'G-1K3JTQGDT9');
-        </script>
-    </body>
+      }
+      @keyframes zoomIn {
+        from {
+          transform: scale(0.5);
+        }
+        to {
+          transform: scale(1);
+        }
+      }
+      @keyframes bounce {
+        0%,
+        20%,
+        50%,
+        80%,
+        100% {
+          transform: translateY(0);
+        }
+        40% {
+          transform: translateY(-30px);
+        }
+        60% {
+          transform: translateY(-15px);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrapper">
+      <h1>How much Dowry are you worth?</h1>
+      <div class="field">
+        <label for="">Your Monthly salary (Fix) ₹</label>
+        <div><input type="text" class="salary" placeholder="₹50000PM" /></div>
+      </div>
+      <div class="field">
+        <label for="">Your Age</label>
+        <div><input type="text" class="age" placeholder="25 Yr" /></div>
+      </div>
+      <div class="field">
+        <label for="">You Net Worth</label>
+        <div>
+          <input type="text" class="networth" placeholder="₹10000000" />
+        </div>
+      </div>
+      <button onclick="calculateSIP()">CALCULATE</button>
+      <h5>
+        MINIMUM AMOUNT:
+        <p id="minimum"></p>
+      </h5>
+      <h5>
+        MAXIMUM AMOUNT:
+        <p id="maximum"></p>
+      </h5>
+    </div>
+
+    <!-- Popups -->
+    <div class="popup" id="agePopup">
+      <img
+        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR9B5xRspKarJVYoFlB--DTtCpLNYvC2zBIQw3V986KJw&s"
+        alt="Underage Meme"
+      />
+    </div>
+    <div class="popup" id="agePopup2">
+      <img
+        src="https://pbs.twimg.com/media/F5IgIEmX0AAYimz.jpg"
+        alt="overage Meme"
+      />
+    </div>
+    <div class="popup" id="salaryPopup">
+      <img
+        src="https://i.pinimg.com/474x/07/34/dc/0734dc64a429ee74c7e38a0ccb960fc5.jpg"
+        alt="No Salary Meme"
+      />
+    </div>
+    <div class="popup" id="networthPopup">
+      <img
+        src="https://i.pinimg.com/originals/83/82/6d/83826d73278d1b15ba7788bfc8eb3204.jpg"
+        alt="High Net Worth Meme"
+      />
+    </div>
+    <div class="popup" id="minCTCPopup">
+      <img
+        src="https://pbs.twimg.com/media/FCSpyQSVcAM0PCj?format=jpg&name=small"
+        alt="Minimum CTC Meme"
+      />
+    </div>
+
+    <script>
+      var CTC = document.querySelector(".salary");
+      var AGE = document.querySelector(".age");
+      var NET_WORTH = document.querySelector(".networth");
+      function calculateSIP() {
+        var maxAmount = 0;
+        maxAmount =
+          CTC.value * 40 + NET_WORTH.value / 4 + (60 - AGE.value) * 6000;
+        var minimumAmount =
+          CTC.value * 25 + NET_WORTH.value / 6 + (60 - AGE.value) * 3000;
+        console.log(maxAmount, minimumAmount);
+        document.getElementById("minimum").innerHTML =
+          "₹" + Math.round(minimumAmount > 0 ? minimumAmount : 0);
+        document.getElementById("maximum").innerHTML =
+          "₹" + Math.round(maxAmount > 0 ? maxAmount : 0);
+
+        if (AGE.value < 21) {
+          showPopup("agePopup");
+        } else if (AGE.value > 40) {
+          showPopup("agePopup2");
+        } else if (CTC.value == 0) {
+          showPopup("salaryPopup");
+        } else if (NET_WORTH.value > 10000000) {
+          showPopup("networthPopup");
+        } else if (CTC.value < 20000) {
+          showPopup("minCTCPopup");
+        }
+      }
+
+      function showPopup(popupId) {
+        var popup = document.getElementById(popupId);
+        popup.classList.add("active");
+        setTimeout(() => {
+          popup.classList.remove("active");
+        }, 3000);
+      }
+    </script>
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-1K3JTQGDT9"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+
+      gtag("config", "G-1K3JTQGDT9");
+    </script>
+    <a
+      href="dahezjodo.vercel.app"
+      style="display: flex; margin-top: 500px; font-size: 2px"
+      >nkr</a
+    >
+  </body>
 </html>
